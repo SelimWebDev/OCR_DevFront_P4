@@ -39,7 +39,8 @@ function closeModal(){
   modalbg.style.display = "none"
 }
 
-// function validate lancé au au submit
+/////////// function validate lancé au au submit  ///////////
+
 function validate(event){
 
   // status de validation des différents input
@@ -80,28 +81,29 @@ function validate(event){
     status.emailStatus = true
   }
 
+  //test date de naissance
   let birthdateTab = birthdate.value.split('-')    // on transforme brithdate en [aaaa, mm, dd]
   if(birthdateTab[0].length == 4 && birthdateTab[1].length == 2 && birthdateTab[2].length == 2){   // on test le nombre d'élement
-    console.log("test longueur ok");
     if(!isNaN(birthdateTab[0]) && !isNaN(birthdateTab[1]) && !isNaN(birthdateTab[2])){             // on test si c'est des chiffres
-      console.log("test nombre ok");
       if(0<parseInt(birthdateTab[1]) &&  parseInt(birthdateTab[1])<13 && 0<parseInt(birthdateTab[2]) &&  parseInt(birthdateTab[2])<32){          // on test 1<=mm<=12 et 1<=jj=<31
-        console.log("test valeur du nombre ok");
         status.birthdateStatus = true
       }
     }
   }
 
+  //test nb compétition
   if(!isNaN(competQuantity.value)){         // si l'input n'est pas vide et est un nombre
     status.competQuantStatus = true
   }
 
+  // test box ville 
   locationCheckBox.forEach( (box) => {      // vérifie qu'une box localistion est checké
     if(box.checked){
       status.locationBoxStatus = true
     }
   })
 
+  // test box CGU
   if(requiredCheckBox.checked){             // vérifie si la box est checké
     status.requiredBoxStatus = true
   }
@@ -109,13 +111,26 @@ function validate(event){
   let arrayStatus = Object.values(status)         //on transforme l'objet status en tableau
   let arrayError = Object.values(errorMsg)        //on transforme l'objet errorMsg en tableau
 
+  let globalIncrement = 0
+  let globalTarget = arrayStatus.length
+
   for (let i=0; i<arrayStatus.length; i++){       // on parcour le tableau des statuts de validation
     if(arrayStatus[i] == false){                  // si non valide
-      event.preventDefault()                      // on annule l'envoie
       errorSpan[i].textContent = arrayError[i]    // on insère l'erreur dans errorSpan
     } else {
       errorSpan[i].textContent = ""               // si status true on efface l'errorSpan
+      globalIncrement += 1
     }
   }
 
+  let globalStatus = false
+  if (globalIncrement == globalTarget){
+    globalStatus = true
+  }
+
+  if(globalIncrement == globalTarget){
+    window.alert("Merci ! Votre réservation a été reçue.")
+  } else {
+    event.preventDefault()
+  }
 }
