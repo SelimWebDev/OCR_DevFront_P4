@@ -123,12 +123,12 @@ function validate(event){
     }
   }
 
-  let globalStatus = false
-  if (globalIncrement == globalTarget){
+  let globalStatus = false                        //status du formulaire
+  if (globalIncrement == globalTarget){           // si tout les test valide status formulaire = true
     globalStatus = true
   }
 
-  if(globalIncrement == globalTarget){
+  if(globalStatus){                               // si formulaire valide window alert sinon bloque l'envoie
     window.alert("Merci ! Votre réservation a été reçue.")
   } else {
     event.preventDefault()
