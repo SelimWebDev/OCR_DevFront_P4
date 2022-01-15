@@ -527,3 +527,7 @@ footer {
   }
 }
 
+.errorSpan{
+  font-size: large;
+  color: red;
+}
